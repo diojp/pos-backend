@@ -23,6 +23,9 @@ public class AtletaController {
     @Autowired
     private AtletaClient atletaClient;
 
+    @Autowired
+    private ViaCepClient viaCepClient;
+
     @PostMapping
     public ResponseEntity<Atleta> cadastrar(@RequestBody Atleta atleta){
         atleta = service.cadastrar(atleta);
