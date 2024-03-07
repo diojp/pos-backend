@@ -1,6 +1,9 @@
 package com.kamikase.web.posbackend.controller;
 
+import com.kamikase.web.posbackend.client.AtletaClient;
+import com.kamikase.web.posbackend.client.ViaCepClient;
 import com.kamikase.web.posbackend.model.Atleta;
+import com.kamikase.web.posbackend.model.dto.CepResponseDTO;
 import com.kamikase.web.posbackend.service.AtletaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,11 @@ import java.util.List;
 public class AtletaController {
     @Autowired
     private AtletaService service;
+    @Autowired
+    private ViaCepClient viaCepClient;
+
+    @Autowired
+    private AtletaClient atletaClient;
 
     @PostMapping
     public ResponseEntity<Atleta> cadastrar(@RequestBody Atleta atleta){
@@ -40,12 +48,19 @@ public class AtletaController {
 
     @GetMapping
     public ResponseEntity<List<Atleta>> listarTodos(){
-        return ResponseEntity.ok(service.listar());
+        return ResponseEntity.ok(atletaClient.listarAtleta());
     }
 
     @GetMapping("/nome/{nome}")
     public ResponseEntity<List<Atleta>> listarPorNome(@PathVariable String nome){
         return ResponseEntity.ok(service.listarPorNome(nome));
+    }
+
+    @GetMapping("/cep/{cep}")
+    public ResponseEntity<CepResponseDTO> consultarCepAleta(@PathVariable String cep){
+        var cepResponse = atletaClient.consultaCep(cep);
+
+        return ResponseEntity.ok(cepResponse);
     }
 
 }
