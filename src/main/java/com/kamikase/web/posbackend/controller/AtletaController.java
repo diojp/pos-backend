@@ -1,6 +1,5 @@
 package com.kamikase.web.posbackend.controller;
 
-import com.kamikase.web.posbackend.client.AtletaClient;
 import com.kamikase.web.posbackend.client.ViaCepClient;
 import com.kamikase.web.posbackend.model.Atleta;
 import com.kamikase.web.posbackend.model.dto.CepResponseDTO;
@@ -20,11 +19,8 @@ public class AtletaController {
     @Autowired
     private ViaCepClient viaCepClient;
 
-    @Autowired
-    private AtletaClient atletaClient;
-
-    @Autowired
-    private ViaCepClient viaCepClient;
+//    @Autowired
+//    private AtletaClient atletaClient;
 
     @PostMapping
     public ResponseEntity<Atleta> cadastrar(@RequestBody Atleta atleta){
@@ -51,7 +47,7 @@ public class AtletaController {
 
     @GetMapping
     public ResponseEntity<List<Atleta>> listarTodos(){
-        return ResponseEntity.ok(atletaClient.listarAtleta());
+        return ResponseEntity.ok(service.listar());
     }
 
     @GetMapping("/nome/{nome}")
@@ -61,7 +57,7 @@ public class AtletaController {
 
     @GetMapping("/cep/{cep}")
     public ResponseEntity<CepResponseDTO> consultarCepAleta(@PathVariable String cep){
-        var cepResponse = atletaClient.consultaCep(cep);
+        var cepResponse = viaCepClient.consultaCep(cep);
 
         return ResponseEntity.ok(cepResponse);
     }

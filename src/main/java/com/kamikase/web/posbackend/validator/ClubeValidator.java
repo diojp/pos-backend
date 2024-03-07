@@ -3,21 +3,20 @@ package com.kamikase.web.posbackend.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-
-public class EsporteValidator implements
-        ConstraintValidator<EsporteValidation, String> {
+public class ClubeValidator implements ConstraintValidator<ClubeValidation, String> {
     private String message;
-    private String [] esportesInvalido = {"futebol", "bale"};
+    private final String [] clubsInvalids = {"Flamengo", "Palmeiras", "Fluminense", "Botafogo"};
+
     @Override
-    public void initialize(EsporteValidation constraintAnnotation) {
+    public void initialize(ClubeValidation constraintAnnotation) {
         message = constraintAnnotation.message();
     }
 
 
     @Override
     public boolean isValid(String nome, ConstraintValidatorContext constraintValidatorContext) {
-        for (String esporte : esportesInvalido ){
-            if (esporte.equals(nome)) {
+        for (String clubes : clubsInvalids){
+            if (clubes.equals(nome)) {
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext
                         .buildConstraintViolationWithTemplate(message + nome)//
